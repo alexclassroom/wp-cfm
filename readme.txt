@@ -3,9 +3,9 @@ Contributors: forum1, mgibbs189, elvismdev, mickaelperrin, alfreddatakillen, jos
 Tags: configuration, settings, configuration management, features, wordpress, wp-cli
 Donate link: http://forumone.com/
 Requires at least: 4.7
-Tested up to: 6.4.3
+Tested up to: 6.6.2
 Requires PHP: 7.4
-Stable tag: 1.7.10
+Stable tag: 0.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -57,8 +57,24 @@ See the filters reference page at the [GitHub Wiki](https://github.com/forumone/
 
 == Installation ==
 
-1. Download and activate the plugin.
-2. Browse to `Settings > WP-CFM` to configure.
+= Manual =
+
+1. Upload to the `/wp-content/plugins/` directory.
+2. Activate the plugin.
+3. Browse to `Settings > WP-CFM` to configure.
+
+= Git Updater =
+
+1. Download the free version, or purchase the premium version, of the [Git Updater plugin](https://git-updater.com/).
+2. Upload to the `/wp-content/plugins/` directory.
+3. Activate the plugin.
+4. Follow the plugin [installation instructions](https://git-updater.com/knowledge-base/remote-installation/) on the Git Updater website.
+
+= Composer =
+
+1. Run `composer require forumone/openid-connect-wp` to add to your Composer-based site.
+
+== Frequently Asked Questions ==
 
 == Screenshots ==
 1. The admin management interface

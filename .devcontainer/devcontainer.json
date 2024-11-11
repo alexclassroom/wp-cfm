@@ -1,10 +1,22 @@
 // For format details, https://containers.dev/implementors/json_reference/.
 {
   "name": "WP-CFM Plugin Development Environment",
-  "dockerComposeFile": "../docker-compose.yml",
-  "service": "app",
-  "mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
-  "workspaceFolder": "/workspaces/wp-cfm",
+
+	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
+	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
+	"dockerComposeFile": [
+		"../docker-compose.yml"
+	],
+
+	// The 'service' property is the name of the service for the container that VS Code should
+	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+	"service": "app",
+
+	"mounts": ["source=dind-var-lib-docker,target=/var/lib/docker,type=volume"],
+
+	// The optional 'workspaceFolder' property is the path VS Code should open by default when
+	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
+	"workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
 
   "customizations": {
     "vscode": {
@@ -18,17 +30,7 @@
 
   // Features to add to the dev container. More info: https://containers.dev/features.
   "features": {
-    "ghcr.io/devcontainers/features/common-utils:2": {
-      "username": "wp_php"
-    },
-    "ghcr.io/devcontainers/features/node:1": {
-      "version": "14"
-    },
-    "ghcr.io/devcontainers/features/docker-in-docker:2": {
-      "dockerDashComposeVersion": "v2"
-    },
-    "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/devcontainers/features/github-cli:1": {}
+    "./local-features/welcome-message": "latest"
   },
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -51,13 +53,13 @@
   },
 
   // Use `onCreateCommand` to run commands as part of the container creation.
-  "onCreateCommand": "sudo chmod +x .devcontainer/install.sh && .devcontainer/install.sh",
+  //"onCreateCommand": "sudo chmod +x .devcontainer/install.sh && .devcontainer/install.sh",
 
   // Use 'postCreateCommand' to run commands after the container is created.
   "postCreateCommand": "sudo chmod +x .devcontainer/setup.sh && .devcontainer/setup.sh",
 
   // Use 'postStartCommand' to run commands after the container has started.
-  "postStartCommand": "cd /app && wp plugin activate wp-cfm",
+  "postStartCommand": "chmod +x .devcontainer/activate.sh && .devcontainer/activate.sh",
 
   // Comment out connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
   "remoteUser": "wp_php"

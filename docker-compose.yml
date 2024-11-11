@@ -1,11 +1,9 @@
 # This is the Compose file for command-line services.
 # Anything that doesn't need to be run as part of the main `docker-compose up'
 # command should reside in here and be invoked by a helper script.
-version: "3.7"
-
 services:
   app:
-    image: wordpressdevelop/php:7.4-fpm
+    image: ghcr.io/ndigitals/wp-dev-container:php-8.0-node-20
     restart: always
     depends_on:
       - db
@@ -25,6 +23,7 @@ services:
     volumes:
       - .:/workspaces/wp-cfm:cached
       - ./tools/local-env:/app:cached
+      - ./tools/php/php-cli.ini:/usr/local/etc/php/php-cli.ini:ro,cached
       - .:/app/wp-content/plugins/wp-cfm:ro,cached
       - ~/.composer:/root/.composer:cached
       - ~/.npm:/root/.npm:cached
@@ -59,6 +58,7 @@ services:
       MYSQL_PASSWORD: wordpress
     volumes:
       - db:/var/lib/mysql
+      - ./tests/db-wordpress_test.sql:/docker-entrypoint-initdb.d/db-wordpress_test.sql
     networks:
       - wpcfm-net
 

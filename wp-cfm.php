@@ -11,18 +11,20 @@
  *
  * @wordpress-plugin
  * Plugin Name:       WP-CFM
- * Plugin URI:        https://forumone.github.io/wp-cfm/
+ * Plugin URI:        https://github.com/forumone/wp-cfm-dist
  * Description:       WordPress Configuration Management
- * Version:           1.7.10
+ * Version:           0.0.0
  * Requires at least: 5.0
  * Requires PHP:      7.4
- * Author:            Forum One
+ * Author:            forum1
  * Author URI:        http://forumone.com/
  * Text Domain:       wp-cfm
  * Domain Path:       /languages
  * License:           GPL-2.0+
  * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
- * GitHub Plugin URI: https://github.com/forumone/wp-cfm
+ * GitHub Plugin URI: https://github.com/forumone/wp-cfm-dist
+ * Primary Branch:    main
+ * Update URI:        https://github.com/forumone/wp-cfm-dist
  */
 
 defined( 'ABSPATH' ) or exit;
@@ -34,7 +36,7 @@ if ( PHP_VERSION_ID >= 50604 ) {
 class WPCFM_Core {
 
 
-	const VERSION = '1.7.10';
+	const VERSION = '0.0.0';
 	public $readwrite;
 	public $registry;
 	public $options;

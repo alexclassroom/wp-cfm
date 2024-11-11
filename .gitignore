@@ -1,15 +1,6 @@
-# Build artifacts not to ignore.
-!vendor/
-vendor/*
-!vendor/autoload.php
-!vendor/composer
-!vendor/symfony/
-vendor/symfony/*
-!vendor/symfony/deprecation-contracts
-!vendor/symfony/polyfill-ctype
-!vendor/symfony/yaml
-vendor/symfony/yaml/PATCHES.txt
-vendor/composer/installers/
+# Build files.
+./assets/css/admin.min.css
+./assets/js/admin.min.js
 
 # Numerous always-ignore extensions
 *.diff
@@ -31,25 +22,6 @@ phpunit.xml
 .phpunit.result.cache
 clover.xml
 changelog.txt
-
-# WordPress Development environment directories to ignore.
-tools/local-env/wp
-tools/local-env/wp-content/db.php
-tools/local-env/wp-content/.litespeed_conf.dat
-tools/local-env/wp-content/cache/*
-tools/local-env/wp-content/config/*
-tools/local-env/wp-content/ewww/*
-tools/local-env/wp-content/litespeed/*
-!tools/local-env/wp-content/plugins/
-tools/local-env/wp-content/plugins/*
-tools/local-env/wp-content/themes/*
-tools/local-env/wp-content/uploads/*
-tools/local-env/wp-content/upgrade/*
-
-# Local Development Exceptions.
-!tools/local-env/wp-content/mu-plugins/*
-!tools/local-env/wp-content/plugins/.gitkeep
-!tools/local-env/wp-content/plugins/wp-cfm/.gitkeep
 
 # OS or Editor folders
 .DS_Store
@@ -97,6 +69,7 @@ intermediate
 cache
 node_modules
 dist
+vendor
 
 # Archives
 *.bz2
@@ -107,4 +80,24 @@ dist
 *.tgz
 *.sql
 *.log
+
+# WordPress Development environment directories to ignore.
+tools/local-env/wp
+tools/local-env/wp-content/db.php
+tools/local-env/wp-content/.litespeed_conf.dat
+tools/local-env/wp-content/cache/*
+tools/local-env/wp-content/config/*
+tools/local-env/wp-content/ewww/*
+tools/local-env/wp-content/litespeed/*
+!tools/local-env/wp-content/plugins/
+tools/local-env/wp-content/plugins/*
+tools/local-env/wp-content/themes/*
+tools/local-env/wp-content/uploads/*
+tools/local-env/wp-content/upgrade/*
+
+# Local Development Exceptions.
+!tools/local-env/wp-content/mu-plugins/*
+!tools/local-env/wp-content/plugins/.gitkeep
+!tools/local-env/wp-content/plugins/wp-cfm/.gitkeep
+
 

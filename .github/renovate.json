@@ -1,0 +1,83 @@
+{
+	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "hostRules": [
+    {
+      "matchHost": "satispress.forumone.dev",
+      "hostType": "packagist",
+      "authType": "Basic",
+      "username": "{{ secrets.SATISPRESS_USERNAME }}",
+      "password": "{{ secrets.SATISPRESS_PASSWORD }}"
+    },
+    {
+      "hostType": "github-releases",
+      "authType": "Basic",
+      "token": "{{ secrets.GITHUB_TOKEN }}"
+    },
+    {
+      "hostType": "git-tags",
+      "authType": "Basic",
+      "token": "{{ secrets.GITHUB_TOKEN }}"
+    }
+  ],
+	"enabledManagers": [
+		"buildkite",
+		"composer",
+		"docker-compose",
+		"dockerfile",
+		"github-actions",
+		"nodenv",
+		"npm",
+		"nvm"
+	],
+	"rangeStrategy": "in-range-only",
+	"automerge": false,
+  "assigneesFromCodeOwners": true,
+	"schedule": [
+		"before 6am every weekday",
+		"before 6am on the first day of the month"
+	],
+	"separateMajorMinor": false,
+	"separateMultipleMajor": false,
+	"separateMinorPatch": false,
+	"packageRules": [
+		{
+			"groupName": "Buildkite Dependencies",
+      "matchManagers": [
+        "buildkite"
+      ]
+		},
+    {
+      "groupName": "Composer Dependencies",
+      "matchDepTypes": ["require"],
+      "matchManagers": [
+        "composer"
+      ],
+      "matchPaths": ["+(composer.json)"]
+    },
+    {
+      "groupName": "Composer Dependencies (Dev)",
+      "matchDepTypes": ["require-dev"],
+      "matchManagers": [
+        "composer"
+      ],
+      "matchPaths": ["+(composer.json)"],
+			"groupSlug": "composer-dependencies-dev"
+    },
+    {
+      "groupName": "Docker Dependencies",
+      "matchManagers": [
+        "dockerfile",
+        "docker-compose"
+      ]
+    },
+		{
+      "groupName": "GitHub Actions Dependencies",
+      "matchManagers": [
+        "github-actions"
+      ]
+		}
+	]
+}

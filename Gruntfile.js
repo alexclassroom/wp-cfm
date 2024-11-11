@@ -64,8 +64,6 @@ module.exports = function (grunt) {
 					'!wordpress/**',
 					'!.*', '!**/*~', //hidden files
 					'!CONTRIBUTING.md',
-					'!README.md',
-					'!HOWTO.md',
 					'!patches/**',
 					'!phpcs.xml', '!phpcs.xml.dist', '!phpstan.neon.dist', '!phpstan-baseline.neon', '!grumphp.yml.dist', // CodeSniffer Configuration.
 					'!codecov.yml', // Code coverage configuration.
@@ -118,7 +116,7 @@ module.exports = function (grunt) {
 					potFilename: 'wp-cfm.pot',                  // Name of the POT file.
 					potHeaders: {
 						poedit: true,                   // Includes common Poedit headers.
-						'report-msgid-bugs-to': 'https://github.com/forumon/wp-cfm/issues',
+						'report-msgid-bugs-to': 'https://github.com/forumon/wp-cfm-dist/issues',
 						'x-poedit-keywordslist': true   // Include a list of all possible gettext functions.
 					},                                // Headers to add to the generated POT file.
 					type: 'wp-plugin',                // Type of project (wp-plugin or wp-theme).
@@ -223,8 +221,8 @@ module.exports = function (grunt) {
 	grunt.registerTask('i18n', ['addtextdomain', 'makepot', 'po2mo']);
 	grunt.registerTask('readme', ['wp_readme_to_markdown']);
 	grunt.registerTask('test', ['checktextdomain']);
-	grunt.registerTask('build', ['gitinfo', 'test', 'i18n', 'readme', 'uglify']);
-	grunt.registerTask('release', ['checkrepo', 'gitinfo', 'checktextdomain', 'clean', 'copy']);
+	grunt.registerTask('build', ['gitinfo', 'i18n', 'readme', 'uglify']);
+	grunt.registerTask('release', ['build', 'clean', 'copy']);
 
 };
 

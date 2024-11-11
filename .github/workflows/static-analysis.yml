@@ -8,9 +8,9 @@ on:
 
 env:
   WP_MULTISITE: 0
-  PHP_VERSION: '7.4'
-  COMPOSER_VERSION: '2.5'
-  ACTION_VERSION: 2
+  PHP_VERSION: '8.1'
+  COMPOSER_VERSION: '2.7'
+  ACTION_VERSION: 1
 
 jobs:
   check_static_analysis:

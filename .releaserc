@@ -1,0 +1,61 @@
+{
+	"branches": [
+		{
+			"name": "main",
+			"channel": "main"
+		},
+		{
+			"name": "release",
+			"channel": "beta",
+			"prerelease": true
+		},
+		{
+			"name": "develop",
+			"channel": "alpha",
+			"prerelease": true
+		}
+	],
+	"ci": false,
+	"tagFormat": "${version}",
+	"preset": "conventionalcommits",
+	"publishConfig": {
+		"access": "restricted"
+	},
+	"plugins": [
+		"@semantic-release/commit-analyzer",
+		"@semantic-release/release-notes-generator",
+		[
+			"@semantic-release/exec",
+			{
+				"prepareCmd": "npm run build"
+			}
+		],
+		[
+			"@semantic-release/wordpress",
+			{
+				"type": "plugin",
+				"slug": "wp-cfm",
+				"withAssets": false,
+				"withReadme": true,
+				"withVersionFile": true,
+				"releasePath": "/tmp/wp-release",
+				"versionFiles": [
+					"wp-cfm.php"
+				]
+			}
+		],
+		[
+			"@semantic-release/github",
+			{
+				"assets": [
+					{
+						"path": "/tmp/wp-release/package.zip",
+						"name": "wp-cfm-${nextRelease.version}.zip"
+					}
+				],
+				"successComment": false,
+				"releasedLabels": false
+			}
+		]
+	]
+}

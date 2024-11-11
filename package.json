@@ -1,12 +1,7 @@
 {
   "name": "wp-cfm",
-  "version": "1.7.10",
+  "version": "0.0.0",
   "description": "Manage and deploy WordPress configuration changes.",
-  "main": "Gruntfile.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/forumone/wp-cfm"
-  },
   "keywords": [
     "wordpress",
     "plugin",
@@ -14,69 +9,66 @@
   ],
   "author": "Forum One",
   "license": "GPL-2.0-only",
-  "bugs": {
-    "url": "https://github.com/forumone/wp-cfm/issues"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/forumone/wp-cfm"
   },
-  "homepage": "https://github.com/forumone/wp-cfm#readme",
+  "bugs": {
+    "url": "https://github.com/forumone/wp-cfm-dist/issues"
+  },
+  "homepage": "https://github.com/forumone/wp-cfm-dist#readme",
+  "main": "Gruntfile.js",
   "dependencies": {
     "dev-require": "^0.1.0"
   },
   "engines": {
-    "node": "14.18.3",
-    "npm": "6.14.15"
+    "node": ">=14 <22",
+    "npm": ">=6 <12"
   },
   "devDependencies": {
-    "@floatwork/grunt-po2mo": "^0.3.0",
-    "@ndigitals/grunt-checkrepo": "0.2.3",
-    "@wordpress/env": "7.0.0",
-    "@wordpress/scripts": "22.2.1",
-    "check-node-version": "~4.1.0",
+    "@floatwork/grunt-po2mo": "0.4.1",
+    "@ndigitals/grunt-checkrepo": "0.2.5",
+    "@semantic-release/changelog": "6.0.3",
+    "@semantic-release/exec": "6.0.3",
+    "@semantic-release/git": "10.0.1",
+    "@semantic-release/wordpress": "1.6.6",
+    "@wordpress/scripts": "30.4.0",
+    "check-node-version": "4.2.1",
+    "conventional-changelog-conventionalcommits": "8.0.0",
     "grunt": "1.5.3",
-    "grunt-checkbranch": "^1.0.4",
-    "grunt-checktextdomain": "^1.0.1",
-    "grunt-cli": "1.4.1",
-    "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-copy": "^1.0.0",
+    "grunt-checkbranch": "1.0.4",
+    "grunt-checktextdomain": "1.0.1",
+    "grunt-cli": "1.5.0",
+    "grunt-contrib-clean": "2.0.1",
+    "grunt-contrib-copy": "1.0.0",
     "grunt-contrib-uglify": "5.2.2",
-    "grunt-gitinfo": "^0.1.9",
-    "grunt-shell": "^2.1.0",
-    "grunt-version": "3.0.0",
-    "grunt-wp-i18n": "^1.0.3",
+    "grunt-gitinfo": "0.1.9",
+    "grunt-shell": "4.0.0",
+    "grunt-version": "3.0.1",
+    "grunt-wp-i18n": "1.0.3",
     "grunt-wp-readme-to-markdown": "2.1.0",
-    "load-grunt-tasks": "^3.5",
-    "node": "14.18.3",
-    "npm": "9.6.7",
-    "puppeteer": "^1.20.0",
+    "load-grunt-tasks": "3.5.2",
+    "puppeteer": "1.20.0",
+    "semantic-release": "24.2.0",
     "typescript": "3.9.10"
   },
   "resolutions": {
-    "getobject": "1.0.0",
-    "shelljs": "0.8.5"
-  },
-  "wp-env": {
-    "plugin-dir": "wp-cfm",
-    "plugin-name": "WP-CFM",
-    "docker-template": "./docker-compose.wp-env.yml",
-    "welcome-build-command": "npm start"
+    "getobject": "^1.0.0",
+    "shelljs": "^0.8.5"
   },
   "scripts": {
     "preinstall": "npx force-resolutions --yes",
     "build": "npm run grunt build",
-    "release": "npm run grunt release -- --force",
-    "start": "wp-env start",
-    "stop": "wp-env stop",
-    "restart": "npm run wp-env stop && npm run wp-env start",
+    "build:release": "npm run grunt release -- --force",
     "grunt": "node_modules/.bin/grunt",
     "version": "npm run grunt version",
     "version:bump": "npm version --no-git-tag-version",
     "check:engines": "wp-scripts check-engines",
     "check:licenses": "wp-scripts check-licenses",
-    "wp-env": "wp-env",
-    "wp": "wp-env run cli wp",
-    "wp:tests": "wp-env run tests-cli wp",
     "test": "npm run grunt test",
     "i18n:check": "npm run grunt checktextdomain",
     "i18n:make": "npm run grunt i18n",
-    "i18n:make:cli": "wp-env run cli wp i18n make-pot . languages/ --slug=daggerhart-openid-connect-generic --include=openid-connect-generic.php,includes"
+    "release": "npm run semantic-release",
+    "semantic-release": "semantic-release"
   }
 }

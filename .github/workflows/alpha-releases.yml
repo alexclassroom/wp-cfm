@@ -1,10 +1,7 @@
-name: Create a Release
+name: Create an Alpha Release
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
 
 permissions:
   contents: read # for checkout
@@ -21,7 +18,7 @@ env:
 
 jobs:
   release:
-    name: New Release
+    name: New Alpha Release
 
     if: github.repository == 'forumone/wp-cfm'
 
@@ -98,32 +95,56 @@ jobs:
     - name: Install Composer Dependencies
       run: composer install --no-dev --prefer-dist
 
-    - name: Build Release
-      id: build-release
+    - name: Build Alpha Release
+      id: build-alpha-release
       # See: https://github.com/semantic-release/semantic-release/blob/master/docs/usage/ci-configuration.md#authentication
       env:
         GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         npm run release
-        mkdir artifacts
+        mkdir -p artifacts/init
+        touch artifacts/init/.gitkeep
         unzip /tmp/wp-release/package.zip -d ./artifacts/
         cp composer.json ./artifacts/wp-cfm
         RELEASE_VERSION=$(cat /tmp/wp-release/VERSION)
         echo "RELEASE_VERSION=$RELEASE_VERSION" >> $GITHUB_OUTPUT
 
     # https://github.com/marketplace/actions/publish-artifact-to-git
-    - name: Publish Release to Artifact Repository
-      id: publish-release
+    # Run this without any files as a means to initialize the branch.
+    - name: Initialize Alpha Release Branch in Artifact Repository
+      id: initialize-alpha-release
       uses: SpinyOwl/publish-artifact-to-git@1.0.1
       env:
         GITHUB_ACTOR: ${{ env.GIT_AUTHOR_NAME }}
       with:
         repository: forumone/${{ env.ARTIFACTS_REPO }}
-        branch: main
+        branch: release/${{ steps.build-alpha-release.outputs.RELEASE_VERSION }}
+        commit_author: ${{ env.GIT_AUTHOR_NAME }}
+        github_token: ${{ secrets.GH_TOKEN }}
+        github_pat: ${{ secrets.GH_TOKEN }}
+        source_folder: artifacts/init
+
+    # https://github.com/marketplace/actions/publish-artifact-to-git
+    - name: Publish Alpha Release to Artifact Repository
+      id: publish-alpha-release
+      uses: SpinyOwl/publish-artifact-to-git@1.0.1
+      env:
+        GITHUB_ACTOR: ${{ env.GIT_AUTHOR_NAME }}
+      with:
+        repository: forumone/${{ env.ARTIFACTS_REPO }}
+        branch: release/${{ steps.build-alpha-release.outputs.RELEASE_VERSION }}
         commit_author: ${{ env.GIT_AUTHOR_NAME }}
         github_token: ${{ secrets.GH_TOKEN }}
         github_pat: ${{ secrets.GH_TOKEN }}
         source_folder: artifacts/wp-cfm
+
+    # https://github.com/marketplace/actions/string-transform
+    - name: Transform Alpha Release Tag
+      id: transform-alpha-release-tag
+      uses: relab-services/string-transform@v1
+      with:
+         source: ${{ steps.build-alpha-release.outputs.RELEASE_VERSION }}
+         transform: replace(/develop\./, "alpha")
 
     # https://github.com/marketplace/actions/pkgdeps-git-tag-action
     - name: Tag Artifact Release
@@ -131,5 +152,5 @@ jobs:
       with:
         github_token: ${{ secrets.GH_TOKEN }}
         github_repo: forumone/${{ env.ARTIFACTS_REPO }}
-        git_commit_sha: ${{ steps.publish-release.outputs.commit_hash }}
-        version: ${{ steps.build-release.outputs.RELEASE_VERSION }}
+        git_commit_sha: ${{ steps.publish-alpha-release.outputs.commit_hash }}
+        version: ${{ steps.transform-alpha-release-tag.outputs.var }}
